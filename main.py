@@ -11,6 +11,7 @@ pygame.display.set_caption("Pendulum Simulation")
 # SETTINGS
 simSpeed = 30 # ticks / frames per second
 gravity = 9.8
+dampening = 0.99 # every tick it loses some energy
 
 # COLORS
 white = (255,255,255)
@@ -19,10 +20,12 @@ blue = (51,153,255)
 red = (255,0,0)
 pink = (254,127,156)
 green = (0,255,0)
-# backgroundColor = (30,30,30)
 backgroundColor = white
 
+# globals
 angle = math.pi / 4
+angularVelocity = 0
+angularAcceleration  = 0
 length = 400
 
 class Origin:
@@ -79,6 +82,10 @@ while True:
             pygame.quit()
             quit()
 
-    angle += 0.05
+    angularAcceleration = -0.01 * math.sin(angle)
+
+    angularVelocity += angularAcceleration
+    angularVelocity *= dampening
+    angle += angularVelocity
     node.update()
     drawWindow(origin, node)
