@@ -11,6 +11,7 @@ pygame.display.set_caption("Pendulum Simulation")
 # SETTINGS
 simSpeed = 30 # ticks / frames per second
 gravity = 9.8
+mass = 1
 dampening = 0.99 # every tick it loses some energy
 
 # COLORS
@@ -23,6 +24,7 @@ green = (0,255,0)
 backgroundColor = white
 
 # globals
+movementConstant = gravity * mass
 angle = math.pi / 4
 angularVelocity = 0
 angularAcceleration  = 0
@@ -82,7 +84,7 @@ while True:
             pygame.quit()
             quit()
 
-    angularAcceleration = -0.01 * math.sin(angle)
+    angularAcceleration = -movementConstant * math.sin(angle) / length
 
     angularVelocity += angularAcceleration
     angularVelocity *= dampening
