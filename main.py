@@ -4,7 +4,7 @@ import pygame, time, math
 pygame.font.init()  # init font
 windowWidth = 800
 windowHeight = 800
-myFont = pygame.font.SysFont("comicsans", 50)
+myFont = pygame.font.SysFont("comicsans", 30)
 screen = pygame.display.set_mode((windowWidth, windowHeight))
 pygame.display.set_caption("Pendulum Simulation")
 
@@ -21,11 +21,12 @@ blue = (51,153,255)
 red = (255,0,0)
 pink = (254,127,156)
 green = (0,255,0)
+black = (0,0,0)
 backgroundColor = white
 
 # globals
 movementConstant = gravity * mass
-angle = math.pi / 4
+angle = math.radians(70)
 angularVelocity = 0
 angularAcceleration  = 0
 length = 400
@@ -68,6 +69,21 @@ def drawWindow(origin, node):
     pygame.draw.line(screen, pink, (node.x, node.y), (origin.x, origin.y), 3)
     origin.draw()
     node.draw()
+
+    # labels
+    score_label = myFont.render("Angle: " + str(round(math.degrees(angle), 4)),1,black)
+    screen.blit(score_label, (10, 10))
+    score_label = myFont.render("Acceleration: " + str(round(angularAcceleration*100, 4)),1,black)
+    screen.blit(score_label, (10, 40))
+    score_label = myFont.render("Velocity: " + str(round(angularVelocity*100, 4)),1,black)
+    screen.blit(score_label, (10, 70))
+    score_label = myFont.render("Mass: " + str(mass),1,black)
+    screen.blit(score_label, (10, windowHeight-40))
+    score_label = myFont.render("Gravity: " + str(gravity),1,black)
+    screen.blit(score_label, (10, windowHeight-70))
+    score_label = myFont.render("Dampening: " + str(dampening),1,black)
+    screen.blit(score_label, (10, windowHeight-100))
+
     pygame.display.update()
 
 clock = pygame.time.Clock()
