@@ -5,29 +5,13 @@ from math import sin
 from drawWindow import *
 import data
 import matplotlib.pyplot as plt
+from graphing import *
+
 # globals
 clock = pygame.time.Clock()
 pendulum = Pendulum()
-
-
 plt.ion()
-
-x = data.data["x"]
-y = data.data["y"]
-
-figure, ax = plt.subplots()
-line1, = ax.plot(x, y)
-
-def updateGraph():
-    x = data.data["ticks"]
-    y = data.data["angle"]
-
-    line1.set_xdata(x)
-    line1.set_ydata(y)
-    ax.margins(1000)
-
-    figure.canvas.draw()
-    figure.canvas.flush_events()
+initGraph()
 
 def main():
     tick = 0
@@ -42,11 +26,19 @@ def main():
                 pygame.quit()
 
         pendulum.update()
-        updateGraph()
         drawWindow(screen, pendulum)
+
         data.data["x"].append(pendulum.nodeX - pendulum.originX)
         data.data["y"].append(-(pendulum.nodeY - pendulum.originY))
         data.data["ticks"].append(tick)
         data.data["angle"].append(pendulum.angle)
+        data.data["velocity"].append(pendulum.angularVelocity)
+        data.data["acceleration"].append(pendulum.angularAcceleration)
+        # # pe = mgh (height is referenced from the lowest point)
+        # data.data["potential"].append(mass * gravity * (pendulum.originY+length - pendulum.nodeY))
+        # data.data["kinetic"].append(0.5 * mass * (pendulum.angularVelocity**2))
 
-main()
+        updateGraph(tick)
+
+if __name__ == "__main__":
+    main()

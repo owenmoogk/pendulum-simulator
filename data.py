@@ -5,4 +5,6 @@ data = {
     "velocity": [],
     "acceleration": [],
     "ticks": [],
+    "potential": [],
+    "kinetic": [],
 }
