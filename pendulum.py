@@ -1,12 +1,12 @@
 from settings import *
-from math import sin, cos
+from math import sin, cos, degrees, radians
 import pygame
 
 class Pendulum:
     def __init__(self):
 
-        self.originX = windowWidth / 2
-        self.originY = 100
+        self.originX = windowWidth // 2
+        self.originY = windowHeight // 2
         self.originColor = grey
         self.originRadius = 10
 
@@ -24,6 +24,11 @@ class Pendulum:
         self.angularVelocity += self.angularAcceleration
         self.angularVelocity *= dampening
         self.angle += self.angularVelocity
+
+        if degrees(self.angle) > 180:
+            self.angle -= radians(360)
+        if degrees(self.angle) < -180:
+            self.angle += radians(360)
 
         self.nodeX = length * sin(self.angle) + self.originX
         self.nodeY = length * cos(self.angle) + self.originY
