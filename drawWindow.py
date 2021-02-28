@@ -19,5 +19,4 @@ def drawWindow(screen, pendulum):
     score_label = myFont.render("Dampening: " + str(dampening),1,black)
     screen.blit(score_label, (10, windowHeight-100))
 
-    print(pendulum.nodeX, pendulum.nodeY)
     pygame.display.update()
