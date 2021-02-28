@@ -13,8 +13,8 @@ simSpeed = 30 # ticks / frames per second
 gravity = 9.8
 mass = 1
 dampening = 0.99 # every tick it loses some energy
-length = 400
-initAngle = radians(70)
+length = 300
+initAngle = radians(539)
 movementConstant = gravity * mass
 
 # COLORS
