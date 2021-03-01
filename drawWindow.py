@@ -1,5 +1,7 @@
-from settings import *
+import settings
+from settings import black, gravity, mass, dampening, backgroundColor, myFont
 from math import degrees
+import pygame
 
 def drawWindow(screen, pendulum):
     screen.fill(backgroundColor)
@@ -13,10 +15,10 @@ def drawWindow(screen, pendulum):
     score_label = myFont.render("Velocity: " + str(round(pendulum.angularVelocity*100, 4)),1,black)
     screen.blit(score_label, (10, 70))
     score_label = myFont.render("Mass: " + str(mass),1,black)
-    screen.blit(score_label, (10, windowHeight-40))
+    screen.blit(score_label, (10, settings.windowHeight-40))
     score_label = myFont.render("Gravity: " + str(gravity),1,black)
-    screen.blit(score_label, (10, windowHeight-70))
+    screen.blit(score_label, (10, settings.windowHeight-70))
     score_label = myFont.render("Dampening: " + str(dampening),1,black)
-    screen.blit(score_label, (10, windowHeight-100))
+    screen.blit(score_label, (10, settings.windowHeight-100))
 
     pygame.display.update()
