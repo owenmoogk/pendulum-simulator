@@ -1,5 +1,5 @@
 import settings
-from settings import black, gravity, mass, dampening, backgroundColor, myFont
+from settings import black, gravity, mass, backgroundColor, myFont
 from math import degrees
 import pygame
 
@@ -18,7 +18,5 @@ def drawWindow(screen, pendulum):
     screen.blit(score_label, (10, settings.windowHeight-40))
     score_label = myFont.render("Gravity: " + str(gravity),1,black)
     screen.blit(score_label, (10, settings.windowHeight-70))
-    score_label = myFont.render("Dampening: " + str(dampening),1,black)
-    screen.blit(score_label, (10, settings.windowHeight-100))
 
     pygame.display.update()

@@ -1,29 +1,27 @@
-import pygame, time, threading
+import pygame
 import settings
-from settings import simSpeed, length, potentialConst
 from pendulum import *
-from math import sin
 from drawWindow import *
-import data
 import matplotlib.pyplot as plt
-from graphing import *
+import graphing
+from time import *
 
 # globals
 clock = pygame.time.Clock()
 pendulum = Pendulum()
 plt.ion()
-initGraph()
+graphing.initGraph()
+timeElapsed = 0
 
 def main():
-    tick = 0
+    
     while True:
-        tick += 1
-        clock.tick(simSpeed)
+        deltaTime = clock.tick() / 1000 # seconds
+        global timeElapsed 
+        timeElapsed += deltaTime
 
-        # quit function
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                data.running = False
                 pygame.quit()
 
             if event.type == pygame.VIDEORESIZE:
@@ -32,22 +30,12 @@ def main():
 
                 pendulum.dimensionChange()
 
-        print(settings.windowHeight, settings.windowWidth)
-
-        pendulum.update()
+        pendulum.update(deltaTime)
         drawWindow(settings.screen, pendulum)
 
-        data.data["x"].append(pendulum.nodeX - pendulum.originX)
-        data.data["y"].append(-(pendulum.nodeY - pendulum.originY))
-        data.data["ticks"].append(tick)
-        data.data["angle"].append(pendulum.angle)
-        data.data["velocity"].append(pendulum.angularVelocity)
-        data.data["acceleration"].append(pendulum.angularAcceleration)
-        # pe = mgh (height is referenced from the lowest point)
-        data.data["potential"].append((pendulum.originY+length - pendulum.nodeY) * potentialConst)
-        data.data["kinetic"].append(0.5 * mass * (pendulum.angularVelocity**2) * simSpeed)
+        graphing.logData(pendulum, timeElapsed)
 
-        updateGraph(tick)
+        graphing.updateGraph()
 
 if __name__ == "__main__":
     main()

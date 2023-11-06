@@ -8,23 +8,25 @@ class Pendulum:
         self.originX = settings.windowWidth // 2
         self.originY = settings.windowHeight // 2
         self.originColor = settings.grey
-        self.originRadius = 10
+        self.originRadius = 5
 
         self.nodeX = settings.length * sin(settings.initAngle) + self.originX
         self.nodeY = settings.length * cos(settings.initAngle) + self.originY
         self.nodeColor = settings.red
-        self.nodeRadius = 40
+        self.nodeRadius = settings.pointRadius
 
         self.angularAcceleration = 0
         self.angularVelocity = 0
         self.angle = settings.initAngle
 
-    def update(self):
+    def update(self, deltaTime):
 
-        self.angularAcceleration = -settings.movementConstant * sin(self.angle) / settings.length
-        self.angularVelocity += self.angularAcceleration
-        self.angularVelocity *= settings.dampening
-        self.angle += self.angularVelocity
+        # cw positive
+        print(self.angle)
+        tangentialForce = - settings.gravity * settings.mass * sin(self.angle) - self.angularVelocity * settings.dampeningCoefficient
+        self.angularAcceleration = tangentialForce / settings.mass
+        self.angularVelocity += self.angularAcceleration * deltaTime
+        self.angle += self.angularVelocity * deltaTime
 
         if degrees(self.angle) > 180:
             self.angle -= radians(360)
