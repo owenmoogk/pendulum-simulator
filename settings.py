@@ -1,6 +1,6 @@
 from math import radians
 import pygame
-from pygame.locals import *
+from pygame.locals import RESIZABLE
 
 # DISPLAY
 windowWidth = 800
@@ -12,13 +12,12 @@ myFont = pygame.font.SysFont("comicsans", 30)
 pointRadius = 20
 
 # PHYSICS
-simSpeed = 30 # ticks / frames per second
 gravity = 9.8 # meters per second
 mass = 1
-dampeningCoefficient = 0.1 # how much the dampening forces increases with velocity (N/(m/s))
+dampeningCoefficient = 0.99 # how much the dampening forces increases with velocity (N/(m/s))
 length = 300
 pixelToMeter = 1/300.0
-initAngle = radians(539)
+initAngle = radians(150)
 
 # COLORS
 white = (255,255,255)

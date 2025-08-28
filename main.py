@@ -1,10 +1,9 @@
 import pygame
 import settings
-from pendulum import *
-from drawWindow import *
+from pendulum import Pendulum
+from drawWindow import drawWindow
 import matplotlib.pyplot as plt
 import graphing
-from time import *
 
 # globals
 clock = pygame.time.Clock()
@@ -16,7 +15,7 @@ timeElapsed = 0
 def main():
     
     while True:
-        deltaTime = clock.tick() / 1000 # seconds
+        deltaTime = 30 / 1000 # seconds
         global timeElapsed 
         timeElapsed += deltaTime
 

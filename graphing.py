@@ -53,17 +53,25 @@ data = {
 }
 
 def logData(pendulum, timeElapsed):
-    data["x"].append(pendulum.nodeX - pendulum.originX)
-    data["y"].append(-(pendulum.nodeY - pendulum.originY))
+    [nodeX, nodeY] = pendulum.getCoords()
+    data["x"].append(nodeX - pendulum.originX)
+    data["y"].append(-(nodeY - pendulum.originY))
     data["angle"].append(pendulum.angle)
     data["time"].append(timeElapsed)
     data["velocity"].append(pendulum.angularVelocity)
     data["acceleration"].append(pendulum.angularAcceleration)
 
     # mgh
-    data["potential"].append((pendulum.originY+ settings.length - pendulum.nodeY) * settings.pixelToMeter * settings.mass * settings.gravity)
+    potentialEnergy = (
+        (pendulum.originY + settings.length - nodeY)
+        * settings.pixelToMeter
+        * settings.mass
+        * settings.gravity
+    )
+    data["potential"].append(potentialEnergy)
 
     # mv^2 / 2
-    data["kinetic"].append(0.5 * settings.mass * (pendulum.angularVelocity**2))
+    kineticEnergy = 0.5 * settings.mass * (pendulum.getMassVelocity() ** 2)
+    data["kinetic"].append(kineticEnergy)
 
-    data["energy"].append(0.5 * settings.mass * (pendulum.angularVelocity**2) + (pendulum.originY+ settings.length - pendulum.nodeY) * settings.pixelToMeter * settings.mass * settings.gravity)
+    data["energy"].append(kineticEnergy + potentialEnergy)
